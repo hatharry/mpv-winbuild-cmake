@@ -21,6 +21,7 @@ ExternalProject_Add(mpv
         crossc
         vapoursynth
     GIT_REPOSITORY https://github.com/mpv-player/mpv.git
+    GIT_TAG v0.29.1
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC}
         PKG_CONFIG=pkg-config
