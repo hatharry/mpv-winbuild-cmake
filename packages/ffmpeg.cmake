@@ -24,8 +24,10 @@ ExternalProject_Add(ffmpeg
         libmfx
         aom
         dav1d
+        zvbi
     GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
     GIT_SHALLOW 1
+    GIT_TAG n4.1
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
     --cross-prefix=${TARGET_ARCH}-
@@ -57,19 +59,18 @@ ExternalProject_Add(ffmpeg
     --enable-libvpx
     --enable-libx264
     --enable-libaom
-    --enable-libdav1d
     --enable-libxvid
     --enable-libzimg
     --enable-libtls
     --enable-libxml2
     --enable-libmysofa
+    --enable-libzvbi
     --enable-cuda
     --enable-cuvid
     --enable-nvdec
     --enable-nvenc
     --enable-libmfx
     --enable-amf
-    --disable-decoder=libaom_av1
     --disable-w32threads
     "--extra-cflags=-DMODPLUG_STATIC"
     BUILD_COMMAND ${MAKE}
