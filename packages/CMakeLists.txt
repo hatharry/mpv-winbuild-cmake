@@ -162,6 +162,7 @@ list(APPEND ep
     libmysofa
     aom
     dav1d
+    zvbi
     ffmpeg
     angle-headers
     mujs
