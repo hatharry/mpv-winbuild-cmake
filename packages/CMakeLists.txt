@@ -168,6 +168,7 @@ list(APPEND ep
     mujs
     spirv-headers
     spirv-tools
+    spirv-cross
     glslang
     vulkan
     shaderc
