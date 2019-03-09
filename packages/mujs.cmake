@@ -8,6 +8,8 @@ ExternalProject_Add(mujs
         AR=${TARGET_ARCH}-ar
         RANLIB=${TARGET_ARCH}-ranlib
         prefix=${MINGW_INSTALL_PREFIX}
+        build/release/libmujs.a
+        build/release/mujs.pc
     INSTALL_COMMAND install -d ${MINGW_INSTALL_PREFIX}/include
             COMMAND install -d ${MINGW_INSTALL_PREFIX}/lib
             COMMAND install -d ${MINGW_INSTALL_PREFIX}/lib/pkgconfig
