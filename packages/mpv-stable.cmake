@@ -1,4 +1,19 @@
-ExternalProject_Add(mpv
+# Make it fetch latest tarball release since I'm too lazy to manually change it
+set(PREFIX_DIR ${CMAKE_CURRENT_BINARY_DIR}/mpv-stable-prefix)
+file(WRITE ${PREFIX_DIR}/get_latest_tag.sh
+"#!/bin/bash
+tag=$(curl -sI https://github.com/mpv-player/mpv/releases/latest | grep 'Location' | sed 's#.*/##g' | tr -d '\r')
+printf 'https://github.com/mpv-player/mpv/archive/%s.tar.gz' $tag")
+
+# Workaround since cmake dont allow you to change file permission easily
+file(COPY ${PREFIX_DIR}/get_latest_tag.sh
+     DESTINATION ${PREFIX_DIR}/src
+     FILE_PERMISSIONS OWNER_EXECUTE OWNER_READ)
+
+execute_process(COMMAND ${PREFIX_DIR}/src/get_latest_tag.sh
+                OUTPUT_VARIABLE LINK)
+
+ExternalProject_Add(mpv-stable
     DEPENDS
         angle-headers
         ffmpeg
@@ -22,9 +37,7 @@ ExternalProject_Add(mpv
         spirv-cross
         vapoursynth
         libsdl2
-    GIT_REPOSITORY https://github.com/mpv-player/mpv.git
-    GIT_TAG v0.29.1
-    UPDATE_COMMAND ""
+    URL ${LINK}
     CONFIGURE_COMMAND ${EXEC}
         PKG_CONFIG=pkg-config
         TARGET=${TARGET_ARCH}
@@ -55,7 +68,7 @@ ExternalProject_Add(mpv
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 
-ExternalProject_Add_Step(mpv bootstrap
+ExternalProject_Add_Step(mpv-stable bootstrap
     DEPENDEES download
     DEPENDERS configure
     COMMAND <SOURCE_DIR>/bootstrap.py
@@ -63,7 +76,7 @@ ExternalProject_Add_Step(mpv bootstrap
     LOG 1
 )
 
-ExternalProject_Add_Step(mpv strip-binary
+ExternalProject_Add_Step(mpv-stable strip-binary
     DEPENDEES build
     COMMAND ${EXEC} ${TARGET_ARCH}-objcopy --only-keep-debug <SOURCE_DIR>/build/mpv.exe <SOURCE_DIR>/build/mpv.debug
     COMMAND ${EXEC} ${TARGET_ARCH}-strip -s <SOURCE_DIR>/build/mpv.exe
@@ -73,48 +86,27 @@ ExternalProject_Add_Step(mpv strip-binary
     COMMENT "Stripping mpv binaries"
 )
 
-ExternalProject_Add_Step(mpv copy-binary
+ExternalProject_Add_Step(mpv-stable copy-binary
     DEPENDEES strip-binary
     COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/build/mpv.exe ${CMAKE_CURRENT_BINARY_DIR}/mpv-package/mpv.exe
     COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/build/mpv.com ${CMAKE_CURRENT_BINARY_DIR}/mpv-package/mpv.com
     COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/build/DOCS/man/mpv.pdf ${CMAKE_CURRENT_BINARY_DIR}/mpv-package/doc/manual.pdf
-
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/build/mpv.debug ${CMAKE_CURRENT_BINARY_DIR}/mpv-debug/mpv.debug
-
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/build/mpv-1.dll ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/mpv-1.dll
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/build/mpv.dll.a ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/libmpv.dll.a
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/build/mpv.def ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/mpv.def
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/client.h ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/client.h
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/opengl_cb.h ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/opengl_cb.h
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/stream_cb.h ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/stream_cb.h
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/qthelper.hpp ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/qthelper.hpp
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/render.h ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/render.h
-    COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/libmpv/render_gl.h ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev/include/render_gl.h
-
     COMMENT "Copying mpv binaries and manual"
 )
 
-set(RENAME ${CMAKE_CURRENT_BINARY_DIR}/mpv-prefix/src/rename.sh)
+set(RENAME ${CMAKE_CURRENT_BINARY_DIR}/mpv-prefix/src/rename-stable.sh)
 file(WRITE ${RENAME}
 "#!/bin/bash
 cd $1
-GIT=$(git rev-parse --short=7 HEAD)
-mv $2 $2-git-\${GIT}")
+TAG=$(cat VERSION)
+mv $2 $3/mpv-\${TAG}-$4")
 
-ExternalProject_Add_Step(mpv copy-package-dir
+ExternalProject_Add_Step(mpv-stable copy-package-dir
     DEPENDEES copy-binary
     COMMAND chmod 755 ${RENAME}
-    COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/mpv-package ${CMAKE_BINARY_DIR}/mpv-${TARGET_CPU}-${BUILDDATE}
-    COMMAND ${RENAME} <SOURCE_DIR> ${CMAKE_BINARY_DIR}/mpv-${TARGET_CPU}-${BUILDDATE}
-
-    COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/mpv-debug ${CMAKE_BINARY_DIR}/mpv-debug-${TARGET_CPU}-${BUILDDATE}
-    COMMAND ${RENAME} <SOURCE_DIR> ${CMAKE_BINARY_DIR}/mpv-debug-${TARGET_CPU}-${BUILDDATE}
-
-    COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/mpv-dev ${CMAKE_BINARY_DIR}/mpv-dev-${TARGET_CPU}-${BUILDDATE}
-    COMMAND ${RENAME} <SOURCE_DIR> ${CMAKE_BINARY_DIR}/mpv-dev-${TARGET_CPU}-${BUILDDATE}
+    COMMAND ${RENAME} <SOURCE_DIR> ${CMAKE_CURRENT_BINARY_DIR}/mpv-package ${CMAKE_BINARY_DIR} ${TARGET_CPU}
     COMMENT "Moving mpv package folder"
     LOG 1
 )
 
-force_rebuild_git(mpv)
-extra_step(mpv)
+extra_step(mpv-stable)

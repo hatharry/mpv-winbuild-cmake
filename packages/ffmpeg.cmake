@@ -3,7 +3,6 @@ ExternalProject_Add(ffmpeg
         amf-headers
         nvcodec-headers
         bzip2
-        game-music-emu
         gmp
         lame
         libressl
@@ -13,6 +12,7 @@ ExternalProject_Add(ffmpeg
         libpng
         libsoxr
         libvpx
+        libwebp
         libzimg
         libmysofa
         opus
@@ -25,9 +25,10 @@ ExternalProject_Add(ffmpeg
         aom
         dav1d
         zvbi
+        vapoursynth
     GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
     GIT_SHALLOW 1
-    GIT_TAG n4.1
+    GIT_TAG n4.2.1
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --cross-prefix=${TARGET_ARCH}-
@@ -44,12 +45,12 @@ ExternalProject_Add(ffmpeg
         --enable-avresample
         --enable-postproc
         --enable-avisynth
+        --enable-vapoursynth
         --enable-gmp
         --enable-libass
         --enable-libbluray
         --enable-libfreetype
         --enable-libfribidi
-        --enable-libgme
         --enable-libmodplug
         --enable-libmp3lame
         --enable-libopus
@@ -57,6 +58,7 @@ ExternalProject_Add(ffmpeg
         --enable-libspeex
         --enable-libvorbis
         --enable-libvpx
+        --enable-libwebp
         --enable-libx264
         --enable-libaom
         --enable-libxvid
@@ -71,7 +73,7 @@ ExternalProject_Add(ffmpeg
         --enable-nvenc
         --enable-libmfx
         --enable-amf
-        --disable-w32threads
+        --disable-decoder=libaom_av1
         "--extra-cflags=-DMODPLUG_STATIC"
     BUILD_COMMAND ${MAKE}
     INSTALL_COMMAND ${MAKE} install

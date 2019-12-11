@@ -1,15 +1,15 @@
-ExternalProject_Add(libuv
-    URL https://github.com/libuv/libuv/archive/v1.33.0.tar.gz
-    URL_HASH SHA256=d085b46aea791fb7772c274ccc58faadc56fdf6252d3b09b7fb24bd03881efdb
+ExternalProject_Add(libsodium
+    URL https://github.com/jedisct1/libsodium/archive/1.0.18.tar.gz
+    URL_HASH SHA256=d59323c6b712a1519a5daf710b68f5e7fde57040845ffec53850911f10a5d4f4
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --host=${TARGET_ARCH}
         --prefix=${MINGW_INSTALL_PREFIX}
         --enable-static
         --disable-shared
-    BUILD_COMMAND ${MAKE}
+    BUILD_COMMAND ${MAKE} CFLAGS='-D_FORTIFY_SOURCE=0'
     INSTALL_COMMAND ${MAKE} install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 
-autogen(libuv)
-extra_step(libuv)
+autogen(libsodium)
+extra_step(libsodium)

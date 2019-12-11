@@ -1,7 +1,6 @@
 ExternalProject_Add(vulkan-header
     GIT_REPOSITORY https://github.com/KhronosGroup/Vulkan-Headers.git
     GIT_SHALLOW 1
-    GIT_TAG v1.1.106
     UPDATE_COMMAND ""
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
@@ -10,7 +9,7 @@ ExternalProject_Add(vulkan-header
     INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_INSTALL 1
 )
-
+force_rebuild_git(vulkan-header)
 extra_step(vulkan-header)
 
 ExternalProject_Add(vulkan
@@ -31,6 +30,14 @@ ExternalProject_Add(vulkan
     BUILD_COMMAND ${MAKE} -C <BINARY_DIR>
     INSTALL_COMMAND ${MAKE} -C <BINARY_DIR> install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
+)
+
+ExternalProject_Add_Step(vulkan copy-wdk-headers
+    DEPENDEES download
+    DEPENDERS configure
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/toolchain/mingw-headers/d3dkmthk.h <SOURCE_DIR>/loader/d3dkmthk.h
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/toolchain/mingw-headers/d3dukmdt.h <SOURCE_DIR>/loader/d3dukmdt.h
+    COMMENT "Copying extra mingw headers"
 )
 
 force_rebuild_git(vulkan)

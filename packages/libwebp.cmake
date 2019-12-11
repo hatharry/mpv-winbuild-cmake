@@ -1,6 +1,7 @@
-ExternalProject_Add(expat
-    URL "https://download.sourceforge.net/expat/expat-2.2.9.tar.bz2"
-    URL_HASH SHA256=f1063084dc4302a427dabcca499c8312b3a32a29b7d2506653ecc8f950a9a237
+ExternalProject_Add(libwebp
+    GIT_REPOSITORY https://chromium.googlesource.com/webm/libwebp.git
+    GIT_SHALLOW 1
+    UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --host=${TARGET_ARCH}
         --prefix=${MINGW_INSTALL_PREFIX}
@@ -10,4 +11,6 @@ ExternalProject_Add(expat
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 
-extra_step(expat)
+force_rebuild_git(libwebp)
+extra_step(libwebp)
+autogen(libwebp)

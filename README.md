@@ -32,6 +32,7 @@ Alternatively, you can download the builds from [here](https://sourceforge.net/p
     - mpv
     - luajit
     - libvpx
+    - libwebp
     - libpng
     - libsoxr
     - libzimg
@@ -53,7 +54,7 @@ Alternatively, you can download the builds from [here](https://sourceforge.net/p
     - libjpeg
     - shaderc (with spirv-headers, spirv-tools, glslang)
     - vulkan
-    - crossc
+    - spirv-cross
     - fribidi
     - libressl
     - nettle
@@ -62,25 +63,26 @@ Alternatively, you can download the builds from [here](https://sourceforge.net/p
     - amf-headers
     - nvcodec-headers
     - libmfx
-    - megasdk (with termcap, readline, cryptopp, sqlite, libuv)
+    - megasdk (with termcap, readline, cryptopp, sqlite, libuv, libsodium)
     - aom
     - dav1d
     - libplacebo
     - fontconfig
 
 - Zip
-    - expat (2.2.6)
-    - bzip (1.0.6)
+    - expat (2.2.9)
+    - bzip (1.0.8)
     - zlib (1.2.11)
     - xvidcore (1.3.5)
     - vorbis (1.3.6)
     - speex (1.2.0)
-    - ogg (1.3.3)
+    - ogg (1.3.4)
     - lzo (2.10)
     - libmodplug (0.8.9.0)
-    - libiconv (1.15)
+    - libiconv (1.16)
     - gmp (6.1.2)
-    - vapoursynth (R43)
+    - vapoursynth (R47.2)
+    - libsdl2 (2.0.10)
 
 
 ## Setup Build Environment

@@ -1,13 +1,15 @@
-ExternalProject_Add(expat
-    URL "https://download.sourceforge.net/expat/expat-2.2.9.tar.bz2"
-    URL_HASH SHA256=f1063084dc4302a427dabcca499c8312b3a32a29b7d2506653ecc8f950a9a237
+ExternalProject_Add(libsdl2
+    URL http://libsdl.org/release/SDL2-2.0.10.tar.gz
+    URL_HASH SHA256=b4656c13a1f0d0023ae2f4a9cf08ec92fffb464e0f24238337784159b8b91d57
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --host=${TARGET_ARCH}
         --prefix=${MINGW_INSTALL_PREFIX}
         --disable-shared
+        --enable-static
     BUILD_COMMAND ${MAKE}
     INSTALL_COMMAND ${MAKE} install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 
-extra_step(expat)
+autogen(libsdl2)
+extra_step(libsdl2)

@@ -164,6 +164,8 @@ list(APPEND ep
     aom
     dav1d
     zvbi
+    libwebp
+    vapoursynth
     ffmpeg
     angle-headers
     mujs
@@ -173,11 +175,11 @@ list(APPEND ep
     glslang
     vulkan
     shaderc
-    crossc
     libplacebo
     curl
-    vapoursynth
+    libsdl2
     mpv
+    mpv-stable
     flac
     opusfile
     libopusenc
@@ -187,6 +189,7 @@ list(APPEND ep
     cryptopp
     sqlite
     libuv
+    libsodium
     megasdk
 )
 foreach(package IN LISTS ep)
