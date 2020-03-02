@@ -166,6 +166,8 @@ list(APPEND ep
     zvbi
     libwebp
     vapoursynth
+    libbs2b
+    libssh
     ffmpeg
     angle-headers
     mujs

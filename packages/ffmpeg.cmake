@@ -6,11 +6,13 @@ ExternalProject_Add(ffmpeg
         gmp
         lame
         libressl
+        libssh
         libass
         libbluray
         libmodplug
         libpng
         libsoxr
+        libbs2b
         libvpx
         libwebp
         libzimg
@@ -19,6 +21,7 @@ ExternalProject_Add(ffmpeg
         speex
         vorbis
         x264
+        x265-10bit
         xvidcore
         libxml2
         libmfx
@@ -57,9 +60,11 @@ ExternalProject_Add(ffmpeg
         --enable-libsoxr
         --enable-libspeex
         --enable-libvorbis
+        --enable-libbs2b
         --enable-libvpx
         --enable-libwebp
         --enable-libx264
+        --enable-libx265
         --enable-libaom
         --enable-libxvid
         --enable-libzimg
@@ -67,14 +72,15 @@ ExternalProject_Add(ffmpeg
         --enable-libxml2
         --enable-libmysofa
         --enable-libzvbi
+        --enable-libssh
+        --enable-libmfx
         --enable-cuda
         --enable-cuvid
         --enable-nvdec
         --enable-nvenc
-        --enable-libmfx
         --enable-amf
         --disable-decoder=libaom_av1
-        "--extra-cflags=-DMODPLUG_STATIC"
+        "--extra-cflags='-DMODPLUG_STATIC -DLIBSSH_STATIC'"
     BUILD_COMMAND ${MAKE}
     INSTALL_COMMAND ${MAKE} install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
