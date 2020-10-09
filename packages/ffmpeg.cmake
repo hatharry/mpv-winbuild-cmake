@@ -31,7 +31,7 @@ ExternalProject_Add(ffmpeg
         vapoursynth
     GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
     GIT_SHALLOW 1
-    GIT_TAG n4.2.1
+    GIT_TAG n4.3.1
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --cross-prefix=${TARGET_ARCH}-
@@ -66,6 +66,7 @@ ExternalProject_Add(ffmpeg
         --enable-libx264
         --enable-libx265
         --enable-libaom
+        --enable-libdav1d
         --enable-libxvid
         --enable-libzimg
         --enable-libtls
