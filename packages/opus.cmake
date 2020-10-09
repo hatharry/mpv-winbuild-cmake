@@ -1,5 +1,5 @@
 ExternalProject_Add(opus
-    GIT_REPOSITORY https://git.xiph.org/opus.git
+    GIT_REPOSITORY https://github.com/xiph/opus.git
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC} cmake -H<SOURCE_DIR> -B<BINARY_DIR>
         -G Ninja
@@ -12,6 +12,7 @@ ExternalProject_Add(opus
         -DCMAKE_C_FLAGS='${CMAKE_C_FLAGS} -D_FORTIFY_SOURCE=0'
     BUILD_COMMAND ${EXEC} ninja -C <BINARY_DIR>
     INSTALL_COMMAND ${EXEC} ninja -C <BINARY_DIR> install
+    BUILD_IN_SOURCE 1
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
 

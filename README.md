@@ -56,11 +56,11 @@ Alternatively, you can download the builds from [here](https://sourceforge.net/p
     - vulkan
     - spirv-cross
     - fribidi
-    - libressl
     - nettle
     - curl
     - libxml2
     - amf-headers
+    - avisynth-headers
     - nvcodec-headers
     - libmfx
     - megasdk (with termcap, readline, cryptopp, sqlite, libuv, libsodium)
@@ -75,16 +75,17 @@ Alternatively, you can download the builds from [here](https://sourceforge.net/p
     - expat (2.2.9)
     - bzip (1.0.8)
     - zlib (1.2.11)
-    - xvidcore (1.3.6)
-    - vorbis (1.3.6)
+    - xvidcore (1.3.7)
+    - vorbis (1.3.7)
     - speex (1.2.0)
     - ogg (1.3.4)
     - lzo (2.10)
     - libmodplug (0.8.9.0)
     - libiconv (1.16)
-    - gmp (6.1.2)
-    - vapoursynth (R48)
-    - libsdl2 (2.0.10)
+    - gmp (6.2.0)
+    - vapoursynth (R52)
+    - libsdl2 (2.0.12)
+    - libressl (3.1.2)
 
 
 ## Setup Build Environment
@@ -92,17 +93,22 @@ Alternatively, you can download the builds from [here](https://sourceforge.net/p
 
 These packages need to be installed first before compiling mpv:
 
-    pacman -S git gyp mercurial subversion ninja cmake meson ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python2-pip python-docutils python2-rst2pdf python2-lxml python2-pillow curl
+    pacman -S git gyp mercurial subversion ninja cmake meson ragel yasm nasm asciidoc enca gperf unzip p7zip gcc-multilib clang python-pip curl
+
+    pip3 install rst2pdf mako
 
 ### Ubuntu Linux / WSL (Windows 10)
 
-    apt-get install build-essential checkinstall bison flex gettext git mercurial subversion ninja-build gyp cmake meson yasm nasm automake pkg-config libtool libtool-bin gcc-multilib g++-multilib clang libgmp-dev libmpfr-dev libmpc-dev libgcrypt-dev gperf ragel texinfo autopoint re2c asciidoc python-docutils rst2pdf docbook2x unzip p7zip-full curl
+    apt-get install build-essential checkinstall bison flex gettext git mercurial subversion ninja-build gyp cmake yasm nasm automake pkg-config libtool libtool-bin gcc-multilib g++-multilib clang libgmp-dev libmpfr-dev libmpc-dev libgcrypt-dev gperf ragel texinfo autopoint re2c asciidoc python3-pip docbook2x unzip p7zip-full curl
+
+    pip3 install rst2pdf meson mako
 
 **Note:**
 
 * Use [apt-fast](https://github.com/ilikenwf/apt-fast) if apt-get is too slow.
 * It is advised to use bash over dash. Set `sudo ln -sf /bin/bash /bin/sh`. Revert back by `sudo ln -sf /bin/dash /bin/sh`.
 * On WSL platform, compiling 32bit require qemu. Refer to [this](https://github.com/Microsoft/WSL/issues/2468#issuecomment-374904520).
+* To update package installed by pip, run `pip3 install <package> --upgrade`.
 
 ### Cygwin
 

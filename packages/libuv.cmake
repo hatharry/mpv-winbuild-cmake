@@ -1,6 +1,6 @@
 ExternalProject_Add(libuv
-    URL https://github.com/libuv/libuv/archive/v1.33.0.tar.gz
-    URL_HASH SHA256=d085b46aea791fb7772c274ccc58faadc56fdf6252d3b09b7fb24bd03881efdb
+    URL https://github.com/libuv/libuv/archive/v1.39.0.tar.gz
+    URL_HASH SHA256=dc7b21f1bb7ef19f4b42c5ea058afabe51132d165da18812b70fb319659ba629
     CONFIGURE_COMMAND ${EXEC} <SOURCE_DIR>/configure
         --host=${TARGET_ARCH}
         --prefix=${MINGW_INSTALL_PREFIX}
