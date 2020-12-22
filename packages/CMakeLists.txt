@@ -183,6 +183,7 @@ list(APPEND ep
     libsdl2
     mpv
     mpv-stable
+    mpv-packaging
     flac
     opusfile
     libopusenc

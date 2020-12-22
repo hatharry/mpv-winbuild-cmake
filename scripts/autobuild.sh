@@ -25,7 +25,11 @@ package() {
     local bit=$1
     local arch=$2
 
-    build $bit $arch
+    if [ -d $buildroot/build$bit/mpv-$arch* ] ; then
+        continue
+    else
+        build $bit $arch
+    fi
     zip $bit $arch
 }
 
@@ -66,7 +70,7 @@ download_mpv_package() {
     local package_url="https://codeload.github.com/shinchiro/mpv-packaging/zip/master"
     if [ -e mpv-packaging.zip ]; then
         echo "Package exists. Check if it is newer.."
-        remote_commit=$(curl -sI $package_url | grep -Po 'ETag: "\K[^"]+')
+        remote_commit=$(git ls-remote https://github.com/shinchiro/mpv-packaging.git master | awk '{print $1;}')
         local_commit=$(unzip -z mpv-packaging.zip | tail +2)
         if [ "$remote_commit" != "$local_commit" ]; then
             wget -O mpv-packaging.zip $package_url
