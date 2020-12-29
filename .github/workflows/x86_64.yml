@@ -42,5 +42,5 @@ jobs:
         with:
           name: x86_64
           path: |
-            ./*/mpv-1.dll
-            ./*/mpv.exe
+            ./**/mpv-1.dll
+            ./**/mpv.exe
