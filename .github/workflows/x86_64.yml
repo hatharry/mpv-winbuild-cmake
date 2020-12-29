@@ -35,4 +35,4 @@ jobs:
           
       - name: build
         run: |
-          ./runme.sh
+          ./runme.sh x86_64
