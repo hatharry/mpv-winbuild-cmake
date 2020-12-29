@@ -15,7 +15,6 @@ ExternalProject_Add(mpv
         rubberband
         uchardet
         openal-soft
-        mujs
         vulkan
         shaderc
         libplacebo
