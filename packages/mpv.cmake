@@ -34,7 +34,6 @@ ExternalProject_Add(mpv
         --disable-manpage-build
         --enable-libmpv-shared
         --enable-lua
-        --enable-javascript
         --enable-sdl2
         --enable-libarchive
         --enable-libbluray
