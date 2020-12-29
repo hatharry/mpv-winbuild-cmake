@@ -37,6 +37,14 @@ jobs:
         run: |
           ./runme.sh x86_64
 
+      - name: log
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2.2.1
+        with:
+          name: x86_64-log
+          path: |
+            ./**/*.log
+
       - name: upload
         uses: actions/upload-artifact@v2.2.1
         with:
@@ -44,4 +52,3 @@ jobs:
           path: |
             ./**/mpv-1.dll
             ./**/mpv.exe
-            ./**/*.log
