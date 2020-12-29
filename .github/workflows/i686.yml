@@ -36,3 +36,11 @@ jobs:
       - name: build
         run: |
           ./runme.sh i686
+
+      - name: upload
+        uses: actions/upload-artifact@v2.2.1
+        with:
+          name: i686
+          path: |
+            ./*/mpv-1.dll
+            ./*/mpv.exe
