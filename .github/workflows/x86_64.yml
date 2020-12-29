@@ -44,3 +44,4 @@ jobs:
           path: |
             ./**/mpv-1.dll
             ./**/mpv.exe
+            ./**/*.log
