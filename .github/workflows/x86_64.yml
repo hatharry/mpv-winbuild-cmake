@@ -36,3 +36,11 @@ jobs:
       - name: build
         run: |
           ./runme.sh x86_64
+
+      - name: upload
+        uses: actions/upload-artifact@v2.2.1
+        with:
+          name: x86_64
+          path: |
+            ./*/mpv-1.dll
+            ./*/mpv.exe
