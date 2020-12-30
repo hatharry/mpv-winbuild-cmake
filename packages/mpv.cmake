@@ -43,7 +43,6 @@ ExternalProject_Add(mpv
         --enable-lcms2
         --enable-openal
         --enable-spirv-cross
-        --enable-vulkan
         --enable-vapoursynth
         --prefix=${MINGW_INSTALL_PREFIX}
     BUILD_COMMAND ${EXEC} <SOURCE_DIR>/waf
